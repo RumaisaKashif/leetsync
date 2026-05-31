@@ -5,7 +5,7 @@
 
 Automatically syncs every accepted LeetCode submission to a GitHub repository, organised by topic. Runs on a schedule via AWS Lambda — no manual effort after setup.
 
-**[Live demo →](https://leetsync-web-omega.vercel.app/)**
+**[Live demo →](https://leetsync-web-omega.vercel.app/)** · **[Solutions repo →](https://github.com/RumaisaKashif/leetcode-solutions)**
 
 ---
 
