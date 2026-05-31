@@ -60,6 +60,40 @@ def get_folder(tags):
             return tag_map[tag]
     return "other"
 
+def build_readme(all_problems):
+    """Generate root README with stats table and full problem list."""
+    from collections import defaultdict
+    by_folder = defaultdict(list)
+    for problem in all_problems:
+        by_folder[problem["folder"]].append(problem)
+
+    total = len(all_problems)
+    easy = sum(1 for p in all_problems if p["difficulty"] == "Easy")
+    medium = sum(1 for p in all_problems if p["difficulty"] == "Medium")
+    hard = sum(1 for p in all_problems if p["difficulty"] == "Hard")
+
+    lines = [
+        "# LeetCode Solutions\n",
+        f"**{total} problems solved** — {easy} Easy · {medium} Medium · {hard} Hard\n",
+        "---\n",
+        "## Topics\n",
+        "| Topic | Solved |",
+        "|-------|--------|",
+    ]
+    for folder, problems in sorted(by_folder.items()):
+        lines.append(f"| {folder} | {len(problems)} |")
+
+    lines.append("\n---\n")
+    lines.append("## All Problems\n")
+    lines.append("| # | Problem | Difficulty | Topic | Language |")
+    lines.append("|---|---------|------------|-------|----------|")
+
+    for i, p in enumerate(all_problems, 1):
+        link = f"[{p['title']}]({p['folder']}/{p['slug']}/solution.{p['ext']})"
+        lines.append(f"| {i} | {link} | {p['difficulty']} | {p['folder']} | {p['lang']} |")
+
+    return "\n".join(lines) + "\n"
+
 def build_notes(item, details):
     """User's personal notes saved on LeetCode for this submission."""
     note_text = details.get("notes") or "_No notes added for this submission._"
